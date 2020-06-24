@@ -21,16 +21,3 @@ inner join sys.dm_exec_requests r on s.session_id = r.session_id
 --outer apply sys.dm_exec_sql_text (r.sql_handle) t
 --outer apply sys.dm_exec_query_plan (r.plan_handle) p 
 where s.session_id > 50
-
-
-
-select *--t.task_address,  wt.waiting_task_address, wt.wait_type, wt.wait_duration_ms/1000, t.exec_context_id,  w.last_wait_type, wt.resource_description, wt.blocking_exec_context_id, wt.blocking_task_address, t.*
-from sys.dm_os_tasks t
-left join  sys.dm_os_waiting_tasks wt on wt.waiting_task_address = t.task_address
-inner join sys.dm_os_workers w on t.worker_address = w.worker_address
-inner join sys.dm_os_schedulers s on t.scheduler_id = s.scheduler_id
-where t.session_id = 80
-order by t.exec_context_id
-
-
-sys.dm_exec_query_Stats
